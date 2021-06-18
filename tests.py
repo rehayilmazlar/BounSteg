@@ -54,13 +54,18 @@ class TestImageProcess(unittest.TestCase):
         
     #----------------------------------------------------------------------
     def test_hide_file(self):
+        test_file_create = './test_files/test_file.png'
+        
         ImageProcess.is_corrupt(self.regular_file)
         ImageProcess.hide_file("./test_files/boun_vision.txt")
-        ImageProcess.save_image("./test_files/test_file.png")
-        self.assertTrue(os.path.exists("./test_files/test_file.png"))
+        ImageProcess.save_image(test_file_create)
+        self.assertTrue(os.path.exists(test_file_create))
         
+        ImageProcess.is_corrupt(test_file_create)
+        result = ImageProcess.show_message()[1]
+        self.assertEqual(result, "boun_vision.txt" )
+        os.remove(test_file_create)
         
-    
     #----------------------------------------------------------------------
     
     def test_show_message(self):
