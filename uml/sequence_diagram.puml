@@ -1,0 +1,37 @@
+@startuml
+actor User
+alt Embed
+
+User -> Dialogue: browse_image()
+Dialogue -> ImageProcess: is_corrupt(filename)
+ImageProcess --> Dialogue: image_attributes
+Dialogue --> User: image_attributes
+User -> Dialogue: Choose File or Text
+
+alt Text
+Dialogue -> ImageProcess: hide_text(message)
+
+else File
+Dialogue -> ImageProcess: hide_file(filename)
+end
+ImageProcess --> Dialogue: new image
+
+User -> Dialogue: save_file()
+Dialogue --> User: new image
+
+else Retrieve
+User -> Dialogue: browse_image()
+Dialogue -> ImageProcess: has_magic()
+ImageProcess --> Dialogue: image_info
+
+User -> Dialogue: save_file()
+alt save_as_file
+ImageProcess --> Dialogue: file
+else save_as_text
+ImageProcess --> Dialogue: text file
+else copy_text
+ImageProcess --> Dialogue: copied text
+end
+Dialogue --> User: Get Hidden Data
+end
+@enduml

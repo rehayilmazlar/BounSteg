@@ -1,0 +1,61 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class ImageProcess{
+    get_image_attributes(filename)
+    is_corrupt(filename)
+    check_space(pixels, secret_binary)
+    convert_to_kilobyte(size)
+    convert_to_binary(text)
+    convert_to_pixels()
+    add_secret_message(secret, pixels, filename)
+    convert_to_image(pixels)
+    add_magic_word(secret, filename)
+    hide_text(message)
+    hide_file(filename)
+    save_image(name)
+    show_message()
+    has_magic()
+    base64_encode(text)
+    base64_decode(text)
+    base64_encode_file(filename)
+    base64_decode_file(string, filename)
+}
+
+class EmbedDialog{
+    __init__(self)
+    browse_image(self)
+    check_filePath(self, file_path)
+    save_file(self)
+    browse_file(self)
+    embed_data(self)
+    toggle_radioFile(self)
+    toggle_radioText(self)
+    switch_dialogue(self)
+}
+
+class RetrieveDialog{
+    __init__(self)
+    switch_dialogue(self)
+    browse_image(self)
+    check_filePath(self, file_path)
+    save_as_text(self)
+    save_as_file(self)
+    save_file(self, file)
+    copy_text(self)
+}
+
+class MessageBox{
+    error(exception_type, exception_message)
+    warning(warning_type, warning_message)
+    information(warning_type, warning_message)
+}
+
+QMainWindow <|-- EmbedDialog
+Ui_embedData <|-- EmbedDialog
+QMainWindow <|-- RetrieveDialog
+Ui_retrieveData <|-- RetrieveDialog
+
+
+@enduml
