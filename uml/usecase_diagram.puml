@@ -3,17 +3,15 @@ left to right direction
 skinparam packageStyle rectangle
 actor User
 rectangle ImageProcess {
-    User -- (Browse Image) #purple;line.bold;
-    User -- (See Embedded Data) #purple;line.bold;
-    User -- (Save New Image) #purple;line.bold;
-    User -- (Get Image Attributes) #purple;line.bold;
-    (MessageBox) .> (Error) #blue;line.dashed;text:blue; : <<include>>
-    (MessageBox) .> (Warning) #blue;line.dashed;text:blue; : <<include>>
-    (MessageBox) .> (Info) #blue;line.dashed;text:blue; : <<include>>
-    (MessageBox) .> (Dialogue) #green;line.dashed;text:green; : <<extends>
-    (Browse Image) .> (Dialogue) #red;line.dashed;text:red; : <<include>>
-    (See Embedded Data) .> (Dialogue) #red;line.dashed;text:red; : <<include>>
-    (Save New Image) .> (Dialogue) #red;line.dashed;text:red; : <<include>>
-    (Get Image Attributes) .> (Dialogue)  #red;line.dashed;text:red; : <<include>>
+    User -- (Browse Image)
+    User -- (See Embedded Data)
+    User -- (Save New Image)
+    User -- (Get Image Attributes)
+    (Handle Not Enough Image Size) .> (Dialogue) : <<extends>>
+    (Browse Image) .> (Dialogue) : <<include>>
+    (See Embedded Data) .> (Dialogue) : <<include>>
+    (Save New Image) .> (Dialogue) : <<include>>
+    (Get Image Attributes) .> (Dialogue) : <<include>>
+
 }
 @enduml
