@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor User
+rectangle ImageProcess {
+    User -- (Browse Image)
+    User -- (See Embedded Data)
+    User -- (Save New Image)
+    User -- (Get Image Attributes)
+    (Handle Not Enough Image Size) .> (Dialogue) : <<extends>>
+    (Browse Image) .> (Dialogue) : <<include>>
+    (See Embedded Data) .> (Dialogue) : <<include>>
+    (Save New Image) .> (Dialogue) : <<include>>
+    (Get Image Attributes) .> (Dialogue) : <<include>>
+
+}
+@enduml
