@@ -54,6 +54,7 @@ class TestImageProcess(unittest.TestCase):
         test_file_create = './test_files/test_file.png'
         test_file_too_big = './test_files/test_file2.png'
         
+        # embed a proper file that its size is not too big for the given image.
         ImageProcess.is_corrupt(self.regular_file)
         ImageProcess.hide_file("./test_files/boun_vision.txt")
         ImageProcess.save_image(test_file_create)
@@ -67,10 +68,19 @@ class TestImageProcess(unittest.TestCase):
         
         ImageProcess.is_corrupt(self.regular_file)
         ImageProcess.hide_file("./test_images/boun.png")
-        # is there a resulting file? there should not be.
-        self.assertFalse(os.path.exists(test_file_create))
-
-        
+        try:
+            ImageProcess.save_image(test_file_create)
+        except AttributeError:
+            self.assertFalse(os.path.exists(test_file_create))
+           
+        # try to embed a very long text.
+        ImageProcess.is_corrupt(self.regular_file)
+        # try to embed 150.000 A.
+        ImageProcess.hide_text('A' * 150000)
+        try:
+            ImageProcess.save_image(test_file_create)
+        except AttributeError:
+            self.assertFalse(os.path.exists(test_file_create))
         
     #----------------------------------------------------------------------
     
