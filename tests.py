@@ -3,7 +3,7 @@ import unittest
 from PyQt5.QtWidgets import QApplication
 from boun_steg import ImageProcess, EmbedDialog
 
-########################################################################
+###########################################################################
 class TestImageProcess(unittest.TestCase):
     ''' set dialogue components and files for testing ''' 
     regular_file = './test_images/ataturk.png'
@@ -102,3 +102,5 @@ class TestImageProcess(unittest.TestCase):
         self.assertEqual(result, "boun_vision.txt" )
         
     #----------------------------------------------------------------------
+    
+###########################################################################
