@@ -358,6 +358,9 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
                     image_info = ImageProcess.get_image_attributes(filePath)
                     self.imageInfo1.setText(image_info)
                     self.embed.setEnabled(True)
+                    # show Browse File button only if File radio button is checked.
+                    if self.radioFile.isChecked():
+                        self.browseFile.setEnabled(True)
 
     def check_filePath(self, file_path):
         if os.path.exists(file_path):
@@ -396,6 +399,18 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
                     fileName)
                 MessageBox.information(
                     "File saved!", "New image file succesfully saved.")
+                # reset the dialogue components
+                self.filePath1.setText("")
+                self.secretText1.setText("")
+                self.radioFile.setChecked(True)
+                self.radioText.setEnabled(True)
+                self.radioFile.setEnabled(True)
+                self.browseImage1.setEnabled(True)
+                self.filePath1.setText("1) Choose an image to start...")
+                self.saveNewImage.setEnabled(False)
+                self.imageInfo1.setText("")
+                self.secretFileInfo.setText("")
+                self.radioText.setChecked(True)
 
     def browse_file(self):
         file_dialog = QFileDialog(self)
@@ -411,6 +426,7 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
             size_info = f"File size: {size} bytes ({size_kilobytes} kb)"
             self.secretFileInfo.setText(size_info)
 
+
     def embed_data(self):
         # print("embed data!")
         image_path = self.filePath1.text()
@@ -424,6 +440,13 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
                     self.saveNewImage.setEnabled(True)
                     MessageBox.information(
                         "Save the new image", "Now you can save your new stego image.")
+                    self.browseFile.setEnabled(False)
+                    self.browseImage1.setEnabled(False)
+                    self.embed.setEnabled(False)
+                    self.radioText.setEnabled(False)
+                    self.radioFile.setEnabled(False)
+
+                    
             else:
                 MessageBox.warning("No Image or File Chosen!",
                                    "You should browse an image and a file to embed.")
@@ -444,6 +467,12 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
                         MessageBox.information(
                             "Save the new image", "Now you can save your new stego image.")
                         self.embed.setEnabled(False)
+                        self.secretText1.setEnabled(False)
+                        self.radioFile.setCheckable(False)
+                        self.embed.setEnabled(False)
+                        self.radioText.setEnabled(False)
+                        self.radioFile.setEnabled(False)
+                        self.browseImage1.setEnabled(False)
             else:
                 MessageBox.error("File does not exist!",
                                  "Please browse a file.")
@@ -455,6 +484,9 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
             # print("switched")
             self.secretText1.setPlaceholderText("")
             self.secretFile1.setText("2) Choose a file to embed...")
+            self.browseFile.setEnabled(False)
+            if not self.filePath1.text() == '1) Choose an image to start...':
+                self.browseFile.setEnabled(True)
         else:
             self.radioText.setChecked(True)
 
@@ -467,9 +499,9 @@ class EmbedDialog(QMainWindow, Ui_bounsteg_embed.Ui_embedData):
             self.secretText1.setPlaceholderText(
                 "2) Type your text here that you want to hide into the image...")
             self.secretFile1.setText("")
+            self.secretFileInfo.setText("")
         else:
             self.radioFile.setChecked(True)
-            self.browseFile.setEnabled(True)
 
     # this method shows the other dialogue (rerieve dialog) and closes this one.
     def switch_dialogue(self):
