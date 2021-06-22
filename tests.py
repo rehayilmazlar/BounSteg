@@ -1,12 +1,7 @@
 import os
 import unittest
-import PIL
-from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication
-from PyQt5.Qt import QKeySequence
-from PyQt5.Qt import Qt
 from boun_steg import ImageProcess, EmbedDialog
-from PyQt5.QtTest import QTest
 
 ########################################################################
 class TestImageProcess(unittest.TestCase):
@@ -66,12 +61,14 @@ class TestImageProcess(unittest.TestCase):
         
         ImageProcess.is_corrupt(test_file_create)
         result = ImageProcess.show_message()[1]
+        # resulting file has the right name?
         self.assertEqual(result, "boun_vision.txt" )
         os.remove(test_file_create)
         
         ImageProcess.is_corrupt(self.regular_file)
-        ImageProcess.hide_file("./test_files/boun.png")
-        print(ImageProcess.has_space)
+        ImageProcess.hide_file("./test_images/boun.png")
+        # is there a resulting file? there should not be.
+        self.assertFalse(os.path.exists(test_file_create))
 
         
         
@@ -95,13 +92,3 @@ class TestImageProcess(unittest.TestCase):
         self.assertEqual(result, "boun_vision.txt" )
         
     #----------------------------------------------------------------------
-    
-
-        
-    
-        
-
-
-    #----------------------------------------------------------------------
-    def tearDown(self):
-        pass
